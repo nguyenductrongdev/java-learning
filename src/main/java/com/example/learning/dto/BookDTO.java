@@ -5,6 +5,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class BookDTO {
+    private UUID object_id;
     private String name;
     private int pages;
 //    private List<AuthorDTO> authors;

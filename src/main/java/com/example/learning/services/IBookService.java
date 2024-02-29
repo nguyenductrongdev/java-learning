@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface IBookService {
     List<BookDTO> getAllBooks();
     Optional<BookDTO> createBook(BookDTO book);
-    Optional<BookDTO> getBook(Long id);
 }

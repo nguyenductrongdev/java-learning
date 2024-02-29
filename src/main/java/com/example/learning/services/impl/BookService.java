@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,18 +51,15 @@ public class BookService implements IBookService {
     @Override
     @Transactional
     public Optional<BookDTO> createBook(BookDTO book) {
-        Book savedBook = bookRepository.save(mapper.map(book, Book.class));
-        if(savedBook.getName().toLowerCase().contains("kill")) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return Optional.empty();
-        }
-        return Optional.of(mapper.map(savedBook, BookDTO.class));
-    }
+        Book bookEntity = new Book();
+        bookEntity.setId(UUID.randomUUID());
+        bookEntity.setCreated_at(LocalDateTime.now());
+        bookEntity.setUpdated_at(LocalDateTime.now());
+        bookEntity.setObject_id(UUID.randomUUID());
+        bookEntity.setName(book.getName());
+        bookEntity.setPages(book.getPages());
 
-    @Override
-    public Optional<BookDTO> getBook(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        if(book.isPresent()) return Optional.of(mapper.map(book.get(), BookDTO.class));
-        return Optional.empty();
+        Book savedBook = bookRepository.save(bookEntity);
+        return Optional.of(mapper.map(savedBook, BookDTO.class));
     }
 }

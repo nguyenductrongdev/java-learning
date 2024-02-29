@@ -2,14 +2,25 @@ server:
     port: 3107
 
 spring:
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    defer-datasource-initialization: true
-  h2:
-    console:
-      enabled: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+  cassandra:
+    schema-action: CREATE_IF_NOT_EXISTS
+    username: ndtrong
+    password: ndtrong
+    local-datacenter: datacenter1
+    request:
+      timeout: 10s
+    port: '9042'
+    connection:
+      init-query-timeout: 10s
+      connect-timeout: 10s
+    contact-points: 127.0.0.1
+    keyspace-name: ks_book
+  main:
+    allow-bean-definition-overriding: true

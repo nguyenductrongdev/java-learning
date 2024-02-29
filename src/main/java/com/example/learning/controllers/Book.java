@@ -29,13 +29,6 @@ public class Book {
         return ResponseEntity.ok(books);
     }
 
-    @GetMapping("/{id}")
-    private ResponseEntity<?> getBook(@PathVariable Long id) {
-        Optional<BookDTO> book = bookService.getBook(id);
-        if(book.isPresent()) return ResponseEntity.ok(book.get());
-        return ResponseEntity.notFound().build();
-    }
-
     @PostMapping
     private ResponseEntity<?> createBook(@RequestBody BookDTO book, @RequestParam(required = false) String author) {
         Optional<BookDTO> createdBook = bookService.createBook(book);
