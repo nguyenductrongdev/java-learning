@@ -29,15 +29,12 @@ import java.util.stream.Collectors;
 @org.springframework.data.cassandra.core.mapping.Table("book")
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-// @SQLRestriction("name <> 'bar'")
 public class Book extends BaseEntityAudit {
     @NotNull
-    @Column(name = "object_id")
-    private UUID object_id;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name = "pages")
-    private Integer pages;
+    @NotNull
+    @Column(name = "page_number")
+    private Integer pageNum;
 }

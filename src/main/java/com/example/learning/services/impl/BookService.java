@@ -1,6 +1,8 @@
 package com.example.learning.services.impl;
 
 import com.example.learning.dto.BookDTO;
+import com.example.learning.elasticsearch.document.ESBook;
+import com.example.learning.elasticsearch.repository.IESBookRepository;
 import com.example.learning.entities.Book;
 import com.example.learning.repository.BookRepository;
 import com.example.learning.services.IBookService;
@@ -22,6 +24,9 @@ import java.util.stream.Collectors;
 public class BookService implements IBookService {
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private IESBookRepository esBookRepository;
 
     @Autowired
     private ModelMapper mapper;
@@ -55,11 +60,13 @@ public class BookService implements IBookService {
         bookEntity.setId(UUID.randomUUID());
         bookEntity.setCreated_at(LocalDateTime.now());
         bookEntity.setUpdated_at(LocalDateTime.now());
-        bookEntity.setObject_id(UUID.randomUUID());
         bookEntity.setName(book.getName());
-        bookEntity.setPages(book.getPages());
+        bookEntity.setPageNum(book.getPageNum());
 
         Book savedBook = bookRepository.save(bookEntity);
+
+        esBookRepository.save(mapper.map(savedBook, ESBook.class));
+
         return Optional.of(mapper.map(savedBook, BookDTO.class));
     }
 }

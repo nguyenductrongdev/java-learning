@@ -32,7 +32,8 @@ public class Book {
     @PostMapping
     private ResponseEntity<?> createBook(@RequestBody BookDTO book, @RequestParam(required = false) String author) {
         Optional<BookDTO> createdBook = bookService.createBook(book);
-        if(createdBook.isPresent()) return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
-        return ResponseEntity.internalServerError().build();
+        if(!createdBook.isPresent()) return ResponseEntity.internalServerError().build();
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
+        
     }
 }

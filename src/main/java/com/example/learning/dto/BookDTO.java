@@ -13,8 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class BookDTO {
-    private UUID object_id;
     private String name;
-    private int pages;
-//    private List<AuthorDTO> authors;
+    private int pageNum;
 }

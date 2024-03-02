@@ -9,6 +9,10 @@ spring:
       hibernate:
         id:
           new_generator_mappings: false
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: localhost:9200
   cassandra:
     schema-action: CREATE_IF_NOT_EXISTS
     username: ndtrong
