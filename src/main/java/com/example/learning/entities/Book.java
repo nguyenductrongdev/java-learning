@@ -1,6 +1,5 @@
 package com.example.learning.entities;
 
-import com.datastax.driver.mapping.annotations.Column;
 import com.example.learning.entities.audit.BaseEntityAudit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,6 +14,7 @@ import lombok.EqualsAndHashCode;
 
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.annotations.Where;
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Arrays;
@@ -31,10 +31,10 @@ import java.util.stream.Collectors;
 @Entity
 public class Book extends BaseEntityAudit {
     @NotNull
-    @Column(name = "name")
+    @Column(value = "name")
     private String name;
 
     @NotNull
-    @Column(name = "page_number")
+    @Column(value = "page_number")
     private Integer pageNum;
 }
