@@ -9,6 +9,11 @@ spring:
       hibernate:
         id:
           new_generator_mappings: false
+    cache:
+      type: caffeine
+      caffeine:
+        spec:
+          expireAfterWrite: 600s
   data:
     elasticsearch:
       cluster-name: docker-cluster
