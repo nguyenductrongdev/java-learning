@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @RequestMapping("/book")
-public class Book {
-    private final Logger logger = LoggerFactory.getLogger(Book.class);
+public class BookController {
+    private final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     IBookService bookService;

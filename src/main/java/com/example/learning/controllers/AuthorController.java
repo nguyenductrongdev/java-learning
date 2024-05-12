@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/author")
-public class Author {
+public class AuthorController {
     @Autowired
     IAuthorService authorService;
 

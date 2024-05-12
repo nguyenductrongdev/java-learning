@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.MappedSuperclass;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,5 +15,6 @@ import java.util.List;
 public class BookDTO {
     private String name;
     private int pages;
+    private LocalDateTime deletedAt;
 //    private List<AuthorDTO> authors;
 }
