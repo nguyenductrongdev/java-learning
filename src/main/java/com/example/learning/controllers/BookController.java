@@ -2,6 +2,8 @@ package com.example.learning.controllers;
 
 import com.example.learning.dto.BookDTO;
 import com.example.learning.services.IBookService;
+import com.example.learning.services.impl.NotificationService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,9 @@ public class BookController {
     @Autowired
     IBookService bookService;
 
+    @Autowired
+    NotificationService notificationService;
+
     @GetMapping
     private ResponseEntity<?> getBooks() {
         List<BookDTO> books = bookService.getAllBooks();
@@ -38,8 +43,8 @@ public class BookController {
 
     @PostMapping
     private ResponseEntity<?> createBook(@RequestBody BookDTO book, @RequestParam(required = false) String author) {
-        Optional<BookDTO> createdBook = bookService.createBook(book);
-        if(createdBook.isPresent()) return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
-        return ResponseEntity.internalServerError().build();
+        BookDTO createdBook = bookService.createBook(book);
+        notificationService.sendNotification("XXX", "Book", "New book is published");
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 }

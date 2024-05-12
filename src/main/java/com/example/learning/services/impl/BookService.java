@@ -26,19 +26,6 @@ public class BookService implements IBookService {
 
     @Override
     public List<BookDTO> getAllBooks() {
-        try {
-            BookDTO test_book = BookDTO.builder().name("breaking").build();
-            ObjectMapper objectMapper = new ObjectMapper();
-            String json = objectMapper.writeValueAsString(test_book);
-            System.out.println("Serialized JSON: " + json);
-            System.out.println(objectMapper);
-        } catch (JsonProcessingException e) {
-            System.out.println("Bug cmnr");
-            e.printStackTrace();
-        } catch (Exception e) {
-            System.out.println("Bug!!!");
-        }
-
         return bookRepository
                 .findAll()
                 .stream()
@@ -48,13 +35,9 @@ public class BookService implements IBookService {
 
     @Override
     @Transactional
-    public Optional<BookDTO> createBook(BookDTO book) {
+    public BookDTO createBook(BookDTO book) {
         Book savedBook = bookRepository.save(mapper.map(book, Book.class));
-        if(savedBook.getName().toLowerCase().contains("kill")) {
-            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-            return Optional.empty();
-        }
-        return Optional.of(mapper.map(savedBook, BookDTO.class));
+        return mapper.map(savedBook, BookDTO.class);
     }
 
     @Override
